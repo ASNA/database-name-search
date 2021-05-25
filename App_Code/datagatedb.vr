@@ -24,7 +24,7 @@ BegClass DataGateDB Access(*Public)
     BegConstructor Access(*Public) 
         // Initialize log. 
         *This._Log = *New StringBuilder()    
-        // Log lines end with \<br> tag by default.
+        // Log lines end with `<br>` tag by default.
         *This.LogWithBRTag = *True 
     EndConstructor 
     
@@ -49,7 +49,7 @@ BegClass DataGateDB Access(*Public)
 
         *This._Log.Append(String.Format('Attempting connection with Database Name {0}{1}', DBName, *This.BRTag))
 
-        // Close connect if it is open. 
+        // Close connection if it is open. 
         If *This.DGDB.IsOpen
             Disconnect *This.DGDB
         EndIf 
