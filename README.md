@@ -1,6 +1,6 @@
 This example shows how to provide a list of runtime Database Names for an AVR for .NET Web application that are automatically iterated. The first Database Name in the list that connects successfully is the Database Name used at runtime. 
 
-> [See full annotated code for this example here.](https://asna.github.io/database-name-search/App_Code/pycco-index.html)    
+> [See full annotated code for this example here.](https://asna.github.io/database-name-search/pycco-index.html)    
 
 
 #### Define your Database Name list
