@@ -24,7 +24,7 @@ BegClass DataGateDB Access(*Public)
     BegConstructor Access(*Public) 
         // Initialize log. 
         *This._Log = *New StringBuilder()    
-        // Log lines end with `<br>` tag by default.
+        // Log lines end with \<br> tag by default.
         *This.LogWithBRTag = *True 
     EndConstructor 
     
