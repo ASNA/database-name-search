@@ -1,5 +1,7 @@
+This example shows how to provide a list of runtime Database Names for an AVR for .NET Web application that are automatically iterated. The first Database Name in the list that connects successfully is the Database Name used at runtime. 
 
-This article shows how to provide a list of runtime Database Names for an AVR for .NET Web application that are automatically iterated. The first Database Name in the list that connects successfully is the Database Name used at runtime. 
+> [See full annotated code for this example here.](https://asna.github.io/database-name-search/App_Code/pycco-index.html)    
+
 
 #### Define your Database Name list
 
@@ -30,7 +32,7 @@ Declare your app's Database Name like you always would, as shown below.
     DclDB DGDB DBName('*Public/DG Net Local') 
     DclFld dg Type(DataGateDB) New()
 
-> [See the DBName class annotated code.](https://asna.github.io/database-name-search/pycco-index.html)    
+> [See the DBName class annotated code.](https://asna.github.io/database-name-search/App_Code/datagatedb.vr.html)    
 
 The DataBase named provided here used is at compile-time. At runtime, the `DataGateDB` class uses the information in the `web.config` keys to attempt to connect to a runtime Database Name. The code below uses `DataGateDB's` `AttemptConnection` method to iterate the Database Name list you provided in `web.config` (or use the DataBase Name override if provided).
 
