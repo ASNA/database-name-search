@@ -47,22 +47,27 @@ BegClass DataGateDB Access(*Public)
 
         *This._Log.Append(String.Format('Attempting connection with Database Name {0}{1}', DBName, *This.BRTag))
 
+        // Close connect if it is open. 
         If *This.DGDB.IsOpen
             Disconnect *This.DGDB
         EndIf 
 
+        // Assign the Database Name.
         *This.DGDB.DBName = DBName
         Try 
+            // Attempt connection. 
             Connect *This.DGDB 
             *This._Log.Append(String.Format('Successfully connected with Database Name {0}{1}', DBName, *This.BRTag))
             LeaveSr DGDB 
         Catch Error Type(System.Exception) 
+            // Connect failed, log exception.
             If Error.InnerException <> *Nothing
                 *This._Log.Append(String.Format('{0} connection error: {1}{2}', DBName, Error.InnerException.Message, *This.BRTag))
             Else
                 *This._Log.Append(String.Format('{0} connection error: {1}{2}', DBName, Error.Message, *This.BRTag))
             EndIf
 
+            // Rethrow error. 
             Throw *New System.ArgumentException(String.Format(MsgMask, DBName)) 
         EndTry  
 	EndFunc
@@ -86,12 +91,12 @@ BegClass DataGateDB Access(*Public)
                 Connection = GetNewConnection(DBName) 
                 LeaveSr Connection 
             Catch Error Type(System.Exception) 
-                // Catch any connection exception errors. Exception detail 
-                // is logged in the `GetNewConnection` method.
+                // Ignore any connection exception errors here. Exception detail 
+                // has been logged in the `GetNewConnection` method.
             EndTry 
         EndFor 
 
-        // If you got here, a connection was not established with any of the Database
+        // If you got here, a connection was not established with one of the Database
         // names provided. 
         *This._Log.Insert(0, String.Format('Could not connect with any of the database names provided{0}', *This.BRTag))                
         LeaveSr *Nothing
