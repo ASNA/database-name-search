@@ -25,7 +25,11 @@
   <span class="nx">http</span><span class="o">:</span><span class="c1">//go.microsoft.com/fwlink/?LinkId=169433</span>
 <span class="o">&lt;</span><span class="nx">configuration</span><span class="o">&gt;</span>
   <span class="o">&lt;</span><span class="nx">appSettings</span><span class="o">&gt;</span>
+    <span class="nx">Put</span> <span class="nx">Database</span> <span class="nx">Names</span><span class="p">,</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">order</span> <span class="nx">you</span> <span class="nx">want</span> <span class="nx">the</span> <span class="nx">app</span> <span class="nx">to</span> <span class="nx">connect</span><span class="p">,</span> <span class="k">in</span> <span class="nx">the</span> <span class="sb">`DBNames`</span> <span class="nx">key</span><span class="p">.</span> 
     <span class="o">&lt;</span><span class="nx">add</span> <span class="nx">key</span><span class="o">=</span><span class="s2">&quot;DBNames&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;*Public/CypressNCPd,*Public/DG NET Locald,&quot;</span><span class="o">/&gt;</span>
+    
+    <span class="nx">If</span> <span class="nx">provided</span><span class="p">,</span> <span class="nx">the</span> <span class="nx">Database</span> <span class="nx">Name</span> <span class="nx">provided</span> <span class="nx">by</span> <span class="nx">the</span> <span class="sb">`DBNameOverride`</span> <span class="nx">key</span> <span class="nx">is</span> <span class="nx">the</span> <span class="nx">_only_</span>
+    <span class="nx">Database</span> <span class="nx">Name</span> <span class="nx">that</span> <span class="nx">is</span> <span class="nx">used</span><span class="p">.</span>
     <span class="c">&lt;!--</span><span class="o">&lt;</span><span class="nx">add</span> <span class="nx">key</span><span class="o">=</span><span class="s2">&quot;DBNameOverride&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;*Public/DG16-DG160X&quot;</span><span class="o">/&gt;--&gt;</span>
   <span class="o">&lt;</span><span class="err">/appSettings&gt;</span>
   <span class="o">&lt;</span><span class="nx">system</span><span class="p">.</span><span class="nx">web</span><span class="o">&gt;</span>

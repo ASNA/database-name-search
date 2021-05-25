@@ -89,6 +89,7 @@ div.docs {
   padding: 10px 25px 1px 50px;
   vertical-align: top;
   text-align: left;
+  font-family: sans-serif;
 }
   .docs pre {
     margin: 15px 0 15px;
