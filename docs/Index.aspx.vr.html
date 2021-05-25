@@ -37,7 +37,11 @@
 
         <span class="nx">dg</span><span class="p">.</span><span class="nx">LogWithBRTag</span> <span class="o">=</span> <span class="o">*</span><span class="nx">False</span> 
         <span class="nx">pgmDB</span> <span class="o">=</span> <span class="nx">dg</span><span class="p">.</span><span class="nx">AttemptConnection</span><span class="p">()</span>
-        <span class="nx">If</span> <span class="nx">pgmDB</span> <span class="o">&lt;&gt;</span> <span class="o">*</span><span class="nx">Nothing</span></pre></div>
+        <span class="nx">If</span> <span class="nx">pgmDB</span> <span class="o">&lt;&gt;</span> <span class="o">*</span><span class="nx">Nothing</span> 
+            <span class="c1">//-- No connections succeeded. Add code as needed.</span>
+        <span class="nx">Else</span>
+            <span class="c1">//-- A connection succeeded. Add code as needed.</span>
+        <span class="nx">EndIf</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -45,30 +49,6 @@
     <div class='docs'>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-1'>#</a>
-      </div>
-      <p>No connections succeeded.</p>
-    </div>
-    <div class='code'>
-      <div class="highlight"><pre>        <span class="nx">Else</span></pre></div>
-    </div>
-  </div>
-  <div class='clearall'></div>
-  <div class='section' id='section-2'>
-    <div class='docs'>
-      <div class='octowrap'>
-        <a class='octothorpe' href='#section-2'>#</a>
-      </div>
-      <p>A connection succeeded.</p>
-    </div>
-    <div class='code'>
-      <div class="highlight"><pre>        <span class="nx">EndIf</span></pre></div>
-    </div>
-  </div>
-  <div class='clearall'></div>
-  <div class='section' id='section-3'>
-    <div class='docs'>
-      <div class='octowrap'>
-        <a class='octothorpe' href='#section-3'>#</a>
       </div>
       <p>This is a crude way to show the log. </p>
     </div>
