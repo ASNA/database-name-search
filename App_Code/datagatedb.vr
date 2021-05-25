@@ -22,8 +22,9 @@ BegClass DataGateDB Access(*Public)
     EndProp
 
     BegConstructor Access(*Public) 
-        // Initialize log. This is ensure the log is clear when calling GetNewConnection directly. 
+        // Initialize log. 
         *This._Log = *New StringBuilder()    
+        // Log lines end with <br> tag by default.
         *This.LogWithBRTag = *True 
     EndConstructor 
     
@@ -118,6 +119,8 @@ BegClass DataGateDB Access(*Public)
 
         // Fetch Database Names provided in the `DBNames` AppSettings key.
         // Trim off trailing comma if present. 
+        // TrimEnd can only take System.Char values; the `o` casts the following 
+        // string character to a System.Char (a *OneChar to AVR). 
         DBNamesAsString = ConfigurationManager.AppSettings['DBNames'].TrimEnd(o',') 
 
         // Split the Database Names string on commas (ignoring whitespace 
