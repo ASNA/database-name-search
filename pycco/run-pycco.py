@@ -10,8 +10,6 @@ def create_index_file(template_filename, files):
     template_contents = read_file(template_filename)
     index_list = create_index_list(files)
     template_contents = template_contents.replace('{{directory}}', index_list)
-    write_file('./docs/__index.html', template_contents)
-    write_file('./docs/index.html', template_contents)
     write_file('./docs/pycco-index.html', template_contents)
 
 def write_file(filename, contents):

@@ -13,11 +13,6 @@ BegClass Index Partial(*Yes) Access(*Public) Extends(System.Web.UI.Page)
        
         DclFld dg Type(DataGateDB) New()
 
-
-        //pgmDB = dg.GetNewConnection('*Public/DG NET Local') 
-
-        // or 
-
         dg.LogWithBRTag = *False 
         pgmDB = dg.AttemptConnection()
         If pgmDB <> *Nothing 
@@ -26,6 +21,7 @@ BegClass Index Partial(*Yes) Access(*Public) Extends(System.Web.UI.Page)
             // A connection succeeded.
         EndIf 
 
+        // This is a crude way to show the log. 
         labelDBLog.Text = dg.Log 
     EndSr
 

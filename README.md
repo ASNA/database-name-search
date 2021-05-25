@@ -30,7 +30,9 @@ Declare your app's Database Name like you always would, as shown below.
     DclDB DGDB DBName('*Public/DG Net Local') 
     DclFld dg Type(DataGateDB) New()
 
-The DataBase named provided here used is at compile-time. At runtime, the `DataGateDB` class (more on its code in a moment) uses the information in the `web.config` keys to attempt to connect to a runtime Database Name. The code below uses `DataGateDB's` `AttemptConnection` method to iterate the Database Name list you provided in `web.config` (or use the DataBase Name override if provided).
+> [See the DBName class annotated code.](https://asna.github.io/database-name-search/pycco-index.html)    
+
+The DataBase named provided here used is at compile-time. At runtime, the `DataGateDB` class uses the information in the `web.config` keys to attempt to connect to a runtime Database Name. The code below uses `DataGateDB's` `AttemptConnection` method to iterate the Database Name list you provided in `web.config` (or use the DataBase Name override if provided).
 
     pgmDB = dg.AttemptConnection()
     If pgmDB <> *Nothing 
@@ -39,13 +41,21 @@ The DataBase named provided here used is at compile-time. At runtime, the `DataG
         // A connection succeeded.
     EndIf 
 
-<small>Figure 2. Attempt to create a connection with the list of Database Names provided.</small>
+<small>Figure 2a. Attempt to create a connection with the list of Database Names provided.</small>
 
 If, after calling `AttemptConnection` the `pgmDB` object is `*Nothing` then none of the Database Names provided could connect. Your program can use the state of the `pgmDB` object to determine what to do if all of the connections fail. When `AttemptConnection` succeeds, it returns an open ASNA DataGate connection.
 
 The `AttemptConnection` method calls the `GetNewConnection` which is the method provided to attempt to create a connection. 
 
-> If needed, you can also call `GetNewConnection` directly.
+If needed, you can also call `GetNewConnection` directly. Doing that, you could connect to a specific Database Name as shown below:
+
+    DclDB pgmDB 
+
+    ...
+
+    pgmDB = dg.GetNewConnection('*Public/DG NET Local') 
+
+<small>Figure 2b. Attempt to create a connection with a specific Database Name.</small>
 
 A log of all connection activity is available in the `DataGateDB's` `Log` property. By default each line in this log ends with a `<br>` tag so that is easy to display with HTML. If you'd rather have each line in the log end with a carriage return and line feed, set `DataGateDB's` `LogWithBRTag` to *False before calling `AttemptConnection`.  
 
