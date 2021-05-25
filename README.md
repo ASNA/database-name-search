@@ -27,14 +27,16 @@ If you want to temporarily override the `DBNames` list, provide a Database Name 
 
 #### Connecting your app at run time
 
-Declare your app's Database Name like you always would, as shown below. 
+
+> [See the DBName class annotated code.](https://asna.github.io/database-name-search/App_Code/datagatedb.vr.html)    
+
+
+Declare your app's Database Name like you always would, as shown below in Figure 2a. The DataBase named provided here (`*Public/DG NET Local`) provides the compile-time connection. At runtime, the `DataGateDB` class uses the information in the `web.config` keys to attempt to connect to a runtime Database Name. The code below uses `DataGateDB's` `AttemptConnection` method to iterate the Database Name list provided in `web.config` (or use the DataBase Name override if provided).
 
     DclDB DGDB DBName('*Public/DG Net Local') 
     DclFld dg Type(DataGateDB) New()
 
-> [See the DBName class annotated code.](https://asna.github.io/database-name-search/App_Code/datagatedb.vr.html)    
-
-The DataBase named provided here used is at compile-time. At runtime, the `DataGateDB` class uses the information in the `web.config` keys to attempt to connect to a runtime Database Name. The code below uses `DataGateDB's` `AttemptConnection` method to iterate the Database Name list you provided in `web.config` (or use the DataBase Name override if provided).
+    ...
 
     pgmDB = dg.AttemptConnection()
     If pgmDB <> *Nothing 
@@ -45,11 +47,9 @@ The DataBase named provided here used is at compile-time. At runtime, the `DataG
 
 <small>Figure 2a. Attempt to create a connection with the list of Database Names provided.</small>
 
-If, after calling `AttemptConnection` the `pgmDB` object is `*Nothing` then none of the Database Names provided could connect. Your program can use the state of the `pgmDB` object to determine what to do if all of the connections fail. When `AttemptConnection` succeeds, it returns an open ASNA DataGate connection.
+If, after calling `AttemptConnection`, the `pgmDB` object is `*Nothing` then none of the Database Names provided could connect. Your program can use the state of the `pgmDB` object to determine what to do if all of the connections fail. When `AttemptConnection` succeeds, it returns an open ASNA DataGate connection. 
 
-The `AttemptConnection` method calls the `GetNewConnection` which is the method provided to attempt to create a connection. 
-
-If needed, you can also call `GetNewConnection` directly. Doing that, you could connect to a specific Database Name as shown below:
+The `AttemptConnection` method iterates the Database Names provided and calls the `GetNewConnection` to attempt to create a connection. If needed, you can also call `GetNewConnection` directly. This would let you connect to a specific Database Name as shown below in Figure 2b:
 
     DclDB pgmDB 
 
@@ -66,7 +66,11 @@ A log of all connection activity is available in the `DataGateDB's` `Log` proper
     Attempting connection with Database Name *Public/DG NET Local
     Successfully connected with Database Name *Public/DG NET Local
 
-<small>Figure 3. Example log contents.</small>
+<small>Figure 3. Example log contents.</small>    
+
+This log is cleared each time you call each time you call either `AttemptConnection` or `GetNewConnection`. If you need to persist it, you'll need to add that code. 
+
+
 
 
 
