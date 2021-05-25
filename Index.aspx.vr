@@ -16,9 +16,9 @@ BegClass Index Partial(*Yes) Access(*Public) Extends(System.Web.UI.Page)
         dg.LogWithBRTag = *False 
         pgmDB = dg.AttemptConnection()
         If pgmDB <> *Nothing 
-            //- No connections succeeded. Add code as needed.
+            //-- No connections succeeded. Add code as needed.
         Else
-            //- A connection succeeded. Add code as needed.
+            //-- A connection succeeded. Add code as needed.
         EndIf 
 
         // This is a crude way to show the log. 
