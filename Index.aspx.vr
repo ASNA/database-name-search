@@ -1,0 +1,41 @@
+﻿Using System
+Using System.Configuration
+Using System.Text.RegularExpressions
+
+
+BegClass Index Partial(*Yes) Access(*Public) Extends(System.Web.UI.Page)
+
+    DclDB pgmDB 
+    
+    BegSr Page_Load Access(*Private) Event(*This.Load)
+        DclSrParm sender Type(*Object)
+        DclSrParm e Type(System.EventArgs)
+       
+        DclFld dg Type(DataGateDB) New()
+
+
+        //pgmDB = dg.GetNewConnection('*Public/DG NET Local') 
+
+        // or 
+
+        dg.LogWithBRTag = *False 
+        pgmDB = dg.AttemptConnection()
+        If pgmDB <> *Nothing 
+            // No connections succeeded.
+        Else
+            // A connection succeeded.
+        EndIf 
+
+        labelDBLog.Text = dg.Log 
+    EndSr
+
+
+    BegSr Page_Unload Access(*Private) Event(*This.Unload)
+        DclSrParm sender Type(*Object)
+        DclSrParm e Type(System.EventArgs)
+
+        If pgmDB <> *Nothing AND pgmDB.IsOpen
+            Disconnect pgmDB 
+        EndIf 
+    EndSr
+EndClass

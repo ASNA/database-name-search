@@ -1,0 +1,125 @@
+﻿Using System
+Using System.Configuration
+Using System.Text.RegularExpressions
+Using System.Text
+
+BegClass DataGateDB Access(*Public)
+
+    DclDB DGDB DBName('*Public/DG Net Local') 
+
+    DclProp DBNames Type(*String) Access(*Public) SetAccess(*Private)
+
+    DclProp LogWithBRTag Type(*Boolean) Access(*Public) 
+
+    DclFld BRTag Type(*String) 
+
+    DclFld _Log Type(StringBuilder) 
+    // `Log` property is get only--can't be set by the outside world. 
+    BegProp Log Type(*String) Access(*Public) 
+        BegGet
+            LeaveSr _Log.ToString()
+        EndGet
+    EndProp
+
+    BegConstructor Access(*Public) 
+        // Initialize log. This is ensure the log is clear when calling GetNewConnection directly. 
+        *This._Log = *New StringBuilder()    
+        *This.LogWithBRTag = *True 
+    EndConstructor 
+    
+    BegSr AssignBRTag 
+        // Assign either a `<br>` tag or a CR/LF to terminate a line in the log. 
+        If LogWithBRTag 
+            BRTag = '<br>'
+        Else 
+            BRTag =  U'000D000A'
+        EndIf 
+    EndSr
+
+    BegFunc GetNewConnection Access(*Public) Type(ASNA.VisualRPG.Runtime.Database) 
+        DclSrParm DBName Type(*String) 
+
+        DclFld MsgMask Type(*String) 
+
+        AssignBRTag()
+
+        MsgMask = 'Could not connect to {0} database name'
+
+        *This._Log.Append(String.Format('Attempting connection with Database Name {0}{1}', DBName, *This.BRTag))
+
+        If *This.DGDB.IsOpen
+            Disconnect *This.DGDB
+        EndIf 
+
+        *This.DGDB.DBName = DBName
+        Try 
+            Connect *This.DGDB 
+            *This._Log.Append(String.Format('Successfully connected with Database Name {0}{1}', DBName, *This.BRTag))
+            LeaveSr DGDB 
+        Catch Error Type(System.Exception) 
+            If Error.InnerException <> *Nothing
+                *This._Log.Append(String.Format('{0} connection error: {1}{2}', DBName, Error.InnerException.Message, *This.BRTag))
+            Else
+                *This._Log.Append(String.Format('{0} connection error: {1}{2}', DBName, Error.Message, *This.BRTag))
+            EndIf
+
+            Throw *New System.ArgumentException(String.Format(MsgMask, DBName)) 
+        EndTry  
+	EndFunc
+
+    BegFunc AttemptConnection Access(*Public) Type(ASNA.VisualRPG.Runtime.Database) 
+        DclArray DBNames Type(*String) Rank(1) 
+        DclFld Connection Type(ASNA.VisualRPG.Runtime.Database) 
+
+        AssignBRTag()
+       
+        // Initialize log. 
+        _Log = *New StringBuilder()
+
+        // Get array of Database Names to attempt to connect to. 
+        DBNames = GetDBNames()
+
+        // Attemp to connect, starting with the zeroth Database Name
+        // first. 
+        ForEach DBName Type(*String) Collection(DBNames) 
+            Try 
+                Connection = GetNewConnection(DBName) 
+                LeaveSr Connection 
+            Catch Error Type(System.Exception) 
+                // Catch any connection exception errors. Exception detail 
+                // is logged in the `GetNewConnection` method.
+            EndTry 
+        EndFor 
+
+        // If you got here, a connection was not established with any of the Database
+        // names provided. 
+        *This._Log.Insert(0, String.Format('Could not connect with any of the database names provided{0}', *This.BRTag))                
+        LeaveSr *Nothing
+    EndFunc 
+
+    BegFunc GetDBNames Type(*String) Rank(1) Access(*Private) 
+        DclArray DBNames Type(*String) Rank(1) 
+
+        DclFld DBNameOverride Type(*String) 
+        DclFld DBNamesAsString Type(*String)
+
+        // Is a Database Name provided with DBNameOverride? 
+        DBNameOverride = ConfigurationManager.AppSettings['DBNameOverride']
+        If DBNameOverride <> *Nothing
+            // Is so, use only that Database Name.
+            DBNames = *New *String[] {DBNameOverride} 
+            LeaveSr DBnames
+        EndIf
+
+        // Fetch Database Names provided in the `DBNames` AppSettings key.
+        // Trim off trailing comma if present. 
+        DBNamesAsString = ConfigurationManager.AppSettings['DBNames'].TrimEnd(o',') 
+
+        // Split the Database Names string on commas (ignoring whitespace 
+        // on either side of the comma).
+        DBNames = Regex.Split(DBNamesAsString, '\s*,\s*') 
+
+        LeaveSr DBNames 
+    EndFunc  
+
+EndClass
