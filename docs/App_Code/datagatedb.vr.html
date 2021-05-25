@@ -44,7 +44,7 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-1'>#</a>
       </div>
-      <p><code>Log</code> property is get only&ndash;can&rsquo;t be set by the outside world. </p>
+      <p>The <code>Log</code> property is read only&ndash;can&rsquo;t be set by the outside world. </p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="nx">BegProp</span> <span class="nx">Log</span> <span class="nx">Type</span><span class="p">(</span><span class="o">*</span><span class="nb">String</span><span class="p">)</span> <span class="nx">Access</span><span class="p">(</span><span class="o">*</span><span class="nx">Public</span><span class="p">)</span> 
@@ -89,10 +89,11 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-4'>#</a>
       </div>
-      <p>Assign either a <code>&lt;br&gt;</code> tag or a CR/LF to terminate a line in the log. </p>
+      <p>Assign either a <code>&lt;br&gt;</code> tag or a CR/LF to terminate a line in the log
+based on the value of LogWithBRTag. </p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre>        <span class="nx">If</span> <span class="nx">LogWithBRTag</span> 
+      <div class="highlight"><pre>        <span class="nx">If</span> <span class="o">*</span><span class="nx">This</span><span class="p">.</span><span class="nx">LogWithBRTag</span> 
             <span class="nx">BRTag</span> <span class="o">=</span> <span class="s1">&#39;&lt;br&gt;&#39;</span>
         <span class="nx">Else</span> 
             <span class="nx">BRTag</span> <span class="o">=</span>  <span class="nx">U</span><span class="s1">&#39;000D000A&#39;</span>
