@@ -14,7 +14,7 @@ BegClass DataGateDB Access(*Public)
     DclFld BRTag Type(*String) 
 
     DclFld _Log Type(StringBuilder) 
-    // `Log` property is get only--can't be set by the outside world. 
+    // The `Log` property is read only--can't be set by the outside world. 
     BegProp Log Type(*String) Access(*Public) 
         BegGet
             LeaveSr _Log.ToString()
@@ -29,8 +29,9 @@ BegClass DataGateDB Access(*Public)
     EndConstructor 
     
     BegSr AssignBRTag 
-        // Assign either a `<br>` tag or a CR/LF to terminate a line in the log. 
-        If LogWithBRTag 
+        // Assign either a `<br>` tag or a CR/LF to terminate a line in the log
+        // based on the value of LogWithBRTag. 
+        If *This.LogWithBRTag 
             BRTag = '<br>'
         Else 
             BRTag =  U'000D000A'
