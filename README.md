@@ -1,5 +1,7 @@
 This example shows how to provide a list of runtime Database Names for an AVR for .NET Web application that are automatically iterated. The first Database Name in the list that connects successfully is the Database Name used at runtime. 
 
+You can load this Web app into your instance of Visual Studio to see the code in action. Don't forget to change the Database Names in the `web.config`. This project works with AVR for .NET 14.x and up. 
+
 > [See full annotated code for this example here.](https://asna.github.io/database-name-search/pycco-index.html)    
 
 
